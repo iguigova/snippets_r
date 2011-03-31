@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript">
+
+//http://www.meetup.com/boards/thread/8331430
+$(function() {
+
+    var formatDate = function(date, separator){
+        var d = new Date(date);
+        separator = separator || '-';
+        return d.getFullYear().toString()
+            .concat(separator, d.getMonth() + 1)
+            .concat(separator, d.getDate())
+            .concat(',', Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    }
+
+    var formatBit = function(bit){
+        return (!!bit) ? 1 : 0;
+    };
+
+    var queryMembers = function(source, target){
+       $.getJSON(source + "&callback=?", function(data) {
+           target.empty();
+           if (data.status && data.status.match(/^200/) == null){
+               target.append("<p><em>Service Unavailable - Verify your API Key</em></p>");
+           }
+           else {
+               for (i in data.results) {            
+                   member = data.results[i];
+                   memberinfo = member.name.replace(',', '')
+                       .concat(',', formatDate(member.joined))
+                       .concat(',', formatDate(member.visited))
+                       .concat(',', member.topics.length)
+                       .concat(',', formatBit(member.photo_url.length));
+                   target.append($("<div>").append(memberinfo));
+               }
+           }
+       });
+    }
+
+    // Get your API Key from here: http://www.meetup.com/meetup_api/key/
+    var meetupAPIKey = 'EnterYourAPIKeyHere';    
+    queryMembers('https://api.meetup.com/members.json/?group_urlname=Vancouver-R-Users-Group-data-analysis-statistics&key=' + meetupAPIKey, $("#rmembers"));
+    queryMembers('https://api.meetup.com/members.json/?group_urlname=Vancouver-Data-Visualization&key=' + meetupAPIKey, $("#dvmembers"));
+});
+
+    </script>
+  </head>
+  <body>
+    <h2>DataVisualization Meetup</h2>
+    <h3>Members</h3>
+    <div id="dvmembers">
+      <p><em>Loading...</em></p>
+    </div>
+    <h3>Events</h3>
+    <h2>R Meetup Members</h2>
+    <h3>Members</h3>
+    <div id="rmembers">
+      <p><em>Loading...</em></p>
+    </div>
+    <h3>Events</h3>
+  </body>
+</html>

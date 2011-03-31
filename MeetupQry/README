@@ -1,0 +1,24 @@
+
+This is my first attempt at R. 
+
+Hello, R! : ) 
+
+The example is based on the membership data for the Vancouver R and Data Visualization Meetup groups. 
+
+To get the latest data, use the attached html file after editing the MeetupAPIKey. You can get your key from http://www.meetup.com/meetup_api/key/
+
+Legend: 
+The Membership Info thermometers are filled based on the number of topics the member has selected on their profile. Their color is based on whether they have posted a member photo. 
+
+Challenge: 
+The Membership Info visualization becomes inadequate when the member names are added to the picture.
+How do the graphs scale? Do we need to replace the unit of measure?
+
+TODO: 
+Histograms of usage based on the time of day
+Overlay meetup events as circles (d = #of people) - do events it impact usage?
+Add legends, better labels, etc. 
+
+References: 
+http://www.mayin.org/ajayshah/KB/R/index.html
+http://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf
